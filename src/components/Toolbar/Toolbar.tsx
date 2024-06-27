@@ -10,7 +10,7 @@ const Toolbar = () => {
         <div className="navbar-nav">
           <div className="navbar-nav">
             <NavLink to="/" className="nav-link fw-medium">Home</NavLink>
-            <NavLink to="/add" className="nav-link fw-medium">Add</NavLink>
+            <NavLink to="/posts/add" className="nav-link fw-medium">Add</NavLink>
             <NavLink to="/about" className="nav-link fw-medium">About</NavLink>
             <NavLink to="/contacts" className="nav-link fw-medium">Contacts</NavLink>
           </div>
