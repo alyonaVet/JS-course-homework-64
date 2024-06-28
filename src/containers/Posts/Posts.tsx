@@ -3,12 +3,12 @@ import {ApiFullPostType, PostData} from '../../types';
 import Post from '../../components/Post/Post';
 import axiosApi from '../../axiosApi';
 import {useNavigate} from 'react-router-dom';
-
+import Spinner from '../../components/Spinner/Spinner';
 
 const Posts = () => {
   const [posts, setPosts] = useState<PostData[]>([]);
-
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(true);
 
 
   const fetchPosts = useCallback(async () => {
@@ -25,6 +25,8 @@ const Posts = () => {
       }
     } catch (error) {
       console.error('Network error:', error);
+    } finally {
+      setLoading(false);
     }
   }, []);
 
@@ -34,19 +36,22 @@ const Posts = () => {
 
   return (
     <div className="container mt-5">
-      {posts.length > 0 ? (
-        posts.map((post: PostData) => (
-          <Post
-            key={post.id}
-            title={post.title}
-            datetime={post.datetime}
-            onClick={() => navigate(`/posts/${post.id}`)}/>
-        ))
+      {loading ? (
+        <Spinner/>
       ) : (
-        <div className="text-center">
-          <p className="fs-4 text-secondary">Nothing posted yet!</p>
-        </div>
-      )}
+        posts.length > 0 ? (
+          posts.map((post: PostData) => (
+            <Post
+              key={post.id}
+              title={post.title}
+              datetime={post.datetime}
+              onClick={() => navigate(`/posts/${post.id}`)}/>
+          ))
+        ) : (
+          <div className="text-center">
+            <p className="fs-4 text-secondary">Nothing posted yet!</p>
+          </div>
+        ))}
     </div>
   );
 };
