@@ -1,9 +1,9 @@
 import React, { ChangeEvent, useState } from 'react';
 import { PostType } from '../../types';
 import { useNavigate } from 'react-router-dom';
-import AddMessageForm from '../../components/AddMessageForm/AddMessageForm';
 import axiosApi from '../../axiosApi';
 import Spinner from '../../components/Spinner/Spinner';
+import MessageForm from '../../components/MessageForm/MessageForm';
 
 const AddPost = () => {
   const [post, setPost] = useState<PostType>({
@@ -28,6 +28,7 @@ const AddPost = () => {
 
     const newPost = {
       post,
+      datetime: new Date().toLocaleString('ru-RU'),
     };
 
     try {
@@ -39,10 +40,10 @@ const AddPost = () => {
   };
 
   let form = (
-    <AddMessageForm
+    <MessageForm
       post={post}
-      onFieldChange={onFieldChange}
       onFormSubmit={onFormSubmit}
+      onFieldChange={onFieldChange}
     />
   );
 
