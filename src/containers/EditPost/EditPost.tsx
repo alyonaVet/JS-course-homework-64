@@ -3,13 +3,14 @@ import {PostType} from '../../types';
 import {useNavigate, useParams} from 'react-router-dom';
 import axiosApi from '../../axiosApi';
 import MessageForm from '../../components/MessageForm/MessageForm';
+import Spinner from '../../components/Spinner/Spinner';
 
 const EditPost = () => {
   const [post, setPost] = useState<PostType>({
     title: '',
     message: '',
   });
-
+  const [isLoading, setIsLoading] = useState(false);
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
 
@@ -39,6 +40,7 @@ const EditPost = () => {
 
   const onFormSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
+    setIsLoading(true);
     const editedPost = {
       post,
       datetime: new Date().toLocaleString('ru-RU'),
@@ -47,18 +49,27 @@ const EditPost = () => {
     try {
       await axiosApi.put(`/posts/${id}.json`, editedPost);
     } finally {
+      setIsLoading(false);
       navigate('/');
     }
   };
 
+  let form = (
+    <MessageForm
+      post={post}
+      onFormSubmit={onFormSubmit}
+      onFieldChange={onFieldChange}
+    />
+  );
+
+  if (isLoading) {
+    form = <Spinner />;
+  }
+
   return (
     <div className="container mt-3">
       <h4>Edit post</h4>
-      <MessageForm
-        post={post}
-        onFieldChange={onFieldChange}
-        onFormSubmit={onFormSubmit}
-      />
+      {form}
     </div>
   );
 };
