@@ -1,13 +1,13 @@
 import React, { ChangeEvent } from 'react';
 import { PostType } from '../../types';
 
-interface AddMessageFormProps {
+interface MessageFormProps {
   post: PostType;
   onFieldChange: (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
   onFormSubmit: (event: React.FormEvent) => void;
 }
 
-const AddMessageForm: React.FC<AddMessageFormProps> = ({ post, onFieldChange, onFormSubmit}) => {
+const MessageForm: React.FC<MessageFormProps> = ({ post, onFieldChange, onFormSubmit}) => {
   return (
       <form onSubmit={onFormSubmit}>
         <div className="form-group">
@@ -40,4 +40,4 @@ const AddMessageForm: React.FC<AddMessageFormProps> = ({ post, onFieldChange, on
   );
 };
 
-export default AddMessageForm;
+export default MessageForm;
