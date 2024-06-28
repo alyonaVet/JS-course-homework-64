@@ -1,28 +1,18 @@
-import React, {useState} from 'react';
+import React from 'react';
 
 interface PostProps {
   title: string;
   datetime: string;
-  message: string;
+  onClick: () => void;
 }
 
-const Post: React.FC<PostProps> = ({title, datetime, message}) => {
-  const [showPostMessage, setShowPostMessage] = useState(false);
-
-  const toggleReadMore = () => {
-    setShowPostMessage((prev) => !prev);
-  };
+const Post: React.FC<PostProps> = ({ title, datetime, onClick}) => {
 
   return (
     <div className="d-flex flex-column align-items-start mb-3 border rounded-1 p-3">
       <div className="text-secondary" >Created on: {datetime}</div>
       <p className="fw-medium">{title}</p>
-      <button className="btn btn-secondary" onClick={toggleReadMore}>{showPostMessage ? 'Hide message' : 'Show More'}</button>
-      {showPostMessage && (
-        <div className="mt-3">
-            <p className="card-text">{message}</p>
-        </div>
-      )}
+      <button className="btn btn-secondary" onClick={onClick}>Show More</button>
     </div>
 
   );
