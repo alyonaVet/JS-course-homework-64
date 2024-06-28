@@ -1,14 +1,13 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import {useCallback, useEffect, useState} from 'react';
 import {useNavigate, useParams} from 'react-router-dom';
 import {FullPostType} from '../../types';
 import FullPost from '../../components/Post/FullPost';
 import axiosApi from '../../axiosApi';
 
-const PostPage: React.FC = () => {
+const PostPage = () => {
   const [post, setPost] = useState<FullPostType | null>(null);
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-
 
   const fetchOnePost = useCallback(async () => {
     try {
@@ -20,6 +19,10 @@ const PostPage: React.FC = () => {
       console.error('Network error:', error);
     }
   }, [id]);
+
+  useEffect(() => {
+    void fetchOnePost();
+  }, [fetchOnePost]);
 
   const deletePost = async () => {
     try {
@@ -36,10 +39,6 @@ const PostPage: React.FC = () => {
   const onClose = () => {
     navigate(`/`);
   };
-
-  useEffect(() => {
-    void fetchOnePost();
-  }, [fetchOnePost]);
 
   return (
     <div className="container mt-3">
