@@ -33,6 +33,10 @@ const PostPage: React.FC = () => {
     navigate(`/posts/${id}/edit`);
   };
 
+  const onClose = () => {
+    navigate(`/`);
+  };
+
   useEffect(() => {
     void fetchOnePost();
   }, [fetchOnePost]);
@@ -40,7 +44,7 @@ const PostPage: React.FC = () => {
   return (
     <div className="container mt-3">
       {post && (
-        <FullPost post={post} onEdit={editPost} onDelete={() => deletePost()} />
+        <FullPost post={post} onEdit={editPost} onDelete={() => deletePost()} onClose={onClose} />
       )}
     </div>
   );
